@@ -1,0 +1,6 @@
+Metric,Value
+Total Orders,10000.0
+Delayed Orders,2085.0
+On Time Orders,7915.0
+Delay Rate (%),20.85
+Average Delay Days,1.34

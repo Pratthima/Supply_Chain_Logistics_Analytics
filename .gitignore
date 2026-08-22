@@ -1,0 +1,24 @@
+# Python virtual environment
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env
+
+# Temporary files
+*.tmp
+*.log
+
+# Power BI temporary/backup files
+~$*.pbix
+*.pbit.lock
