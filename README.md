@@ -69,3 +69,22 @@ Supply_Chain_Logistics_Analytics/
 ├── .gitignore
 ├── requirements.txt
 └── README.md
+
+🔄 Project Workflow
+Raw Supply Chain Data
+        ↓
+Data Generation / Collection
+        ↓
+Data Cleaning
+        ↓
+Exploratory Data Analysis
+        ↓
+SQL Analysis
+        ↓
+Predictive Analytics
+        ↓
+Power BI Dashboard
+        ↓
+Business Insights
+        ↓
+Recommendations
