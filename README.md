@@ -114,7 +114,7 @@ Python Analysis      MySQL Database
 * Python 3.11
 * Pandas
 * NumPy
-* Power BI
+* Matplotlib
 
 ## Database
 
