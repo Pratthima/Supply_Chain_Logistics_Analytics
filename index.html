@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Supply Chain Logistics Analytics</title>
+
+    <meta name="description"
+          content="Supply Chain Logistics Analytics Dashboard using Python, SQL, Machine Learning and Power BI.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 18px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 25px;
+            background:
+                radial-gradient(circle at top left, #dbeafe, transparent 35%),
+                radial-gradient(circle at bottom right, #e0e7ff, transparent 35%),
+                #f8fafc;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 7vw, 76px);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+            color: #111827;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 720px;
+            margin: auto;
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .hero-buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* GENERAL */
+
+        section {
+            padding: 90px 25px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .section-title p {
+            color: #64748b;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        /* STATS */
+
+        .stats {
+            background: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            background: #ffffff;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* ABOUT */
+
+        .about {
+            background: #f8fafc;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: #64748b;
+            margin-bottom: 18px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .feature-list li {
+            margin-bottom: 13px;
+            font-weight: 600;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #2563eb;
+            font-weight: 800;
+            margin-right: 10px;
+        }
+
+        .about-card {
+            background: #111827;
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+        }
+
+        .about-card h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .about-card p {
+            color: #cbd5e1;
+        }
+
+        /* TECHNOLOGIES */
+
+        .technology-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .tech-card {
+            background: white;
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .tech-card h3 {
+            margin-bottom: 10px;
+            color: #111827;
+        }
+
+        .tech-card p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+            background: #f8fafc;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
+        }
+
+        .dashboard-placeholder {
+            height: 190px;
+            background: linear-gradient(135deg, #dbeafe, #eef2ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d4ed8;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        .dashboard-info {
+            padding: 22px;
+        }
+
+        .dashboard-info h3 {
+            margin-bottom: 8px;
+        }
+
+        .dashboard-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* FEATURES */
+
+        .features {
+            background: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .feature-box {
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+        }
+
+        .feature-box h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-box p {
+            color: #64748b;
+        }
+
+        /* WORKFLOW */
+
+        .workflow {
+            background: #f8fafc;
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .workflow-step {
+            text-align: center;
+            padding: 25px 15px;
+            background: white;
+            border-radius: 15px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .workflow-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+        }
+
+        .workflow-step h3 {
+            font-size: 16px;
+        }
+
+        .workflow-step p {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* CTA */
+
+        .cta {
+            padding: 100px 25px;
+            text-align: center;
+            background: #111827;
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #0b1120;
+            color: #94a3b8;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .technology-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid,
+            .technology-grid,
+            .feature-grid,
+            .workflow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .section-title h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+
+<nav>
+    <div class="nav-container">
+
+        <div class="logo">
+            Supply<span>Chain</span> Analytics
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#technology">Technology</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#workflow">Workflow</a></li>
+        </ul>
+
+    </div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            DATA ANALYTICS • MACHINE LEARNING • POWER BI
+        </div>
+
+        <h1>
+            Supply Chain<br>
+            <span>Logistics Analytics</span>
+        </h1>
+
+        <p>
+            An end-to-end analytics platform designed to monitor
+            delivery performance, inventory levels, logistics costs,
+            operational risks and predictive delivery delays.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="https://github.com/Pratthima/Supply_Chain_Logistics_Analytics"
+                target="_blank"
+                class="btn btn-primary">
+                View GitHub Repository
+            </a>
+
+            <a
+                href="#dashboard"
+                class="btn btn-secondary">
+                Explore Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATISTICS -->
+
+<section class="stats">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Project Overview</h2>
+
+            <p>
+                Key metrics generated from the supply chain analytics dataset.
+            </p>
+
+        </div>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <h3>10K</h3>
+                <p>Total Orders</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>20.85%</h3>
+                <p>Delivery Delay Rate</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>1.34</h3>
+                <p>Average Delivery Delay</p>
+            </div>
+
+            <div class="stat-card">
+                <h3>8.15B</h3>
+                <p>Total Revenue</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section class="about" id="about">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>About the Project</h2>
+
+            <p>
+                Turning supply chain data into actionable business intelligence.
+            </p>
+
+        </div>
+
+        <div class="about-grid">
+
+            <div class="about-text">
+
+                <h3>Data-Driven Supply Chain Management</h3>
+
+                <p>
+                    The project analyzes supply chain and logistics data
+                    to identify delivery delays, inventory risks,
+                    transportation patterns, warehouse performance
+                    and operational risks.
+                </p>
+
+                <p>
+                    Machine learning and business intelligence techniques
+                    are combined to provide predictive insights and
+                    support better operational decision-making.
+                </p>
+
+                <ul class="feature-list">
+
+                    <li>Delivery performance analysis</li>
+
+                    <li>Inventory monitoring</li>
+
+                    <li>Warehouse analysis</li>
+
+                    <li>Transportation cost analysis</li>
+
+                    <li>Delivery risk monitoring</li>
+
+                    <li>Predictive delay analysis</li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="about-card">
+
+                <h3>Supply Chain Control Tower</h3>
+
+                <p>
+                    The Power BI dashboard provides a centralized
+                    analytical view of supply chain operations,
+                    allowing users to monitor KPIs, delivery status,
+                    inventory levels, logistics costs and risk levels.
+                </p>
+
+                <br>
+
+                <p>
+                    The predictive analytics page extends the dashboard
+                    with machine-learning-based delivery delay analysis.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TECHNOLOGY -->
+
+<section id="technology">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Technology Stack</h2>
+
+            <p>
+                Tools and technologies used to build the analytics platform.
+            </p>
+
+        </div>
+
+        <div class="technology-grid">
+
+            <div class="tech-card">
+
+                <h3>Python</h3>
+
+                <p>
+                    Data generation, cleaning, exploratory data analysis,
+                    machine learning and visualization.
+                </p>
+
+            </div>
+
+            <div class="tech-card">
+
+                <h3>SQL / MySQL</h3>
+
+                <p>
+                    Database creation, data storage and analytical queries
+                    for supply chain operations.
+                </p>
+
+            </div>
+
+            <div class="tech-card">
+
+                <h3>Power BI</h3>
+
+                <p>
+                    Interactive dashboards, KPI monitoring,
+                    risk analysis and business intelligence.
+                </p>
+
+            </div>
+
+            <div class="tech-card">
+
+                <h3>Pandas & NumPy</h3>
+
+                <p>
+                    Data processing, transformation and numerical analysis.
+                </p>
+
+            </div>
+
+            <div class="tech-card">
+
+                <h3>Scikit-learn</h3>
+
+                <p>
+                    Machine learning based delivery delay prediction
+                    and feature analysis.
+                </p>
+
+            </div>
+
+            <div class="tech-card">
+
+                <h3>Matplotlib</h3>
+
+                <p>
+                    Exploratory data analysis and machine learning
+                    visualization generation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard" id="dashboard">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Analytics Dashboard</h2>
+
+            <p>
+                Three major analytical views developed for the project.
+            </p>
+
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-placeholder">
+                    SUPPLY CHAIN CONTROL TOWER
+                </div>
+
+                <div class="dashboard-info">
+
+                    <h3>Supply Chain Control Tower</h3>
+
+                    <p>
+                        Monitors revenue, orders, delivery performance,
+                        inventory, warehouses, logistics and operational risk.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-placeholder">
+                    PREDICTIVE ANALYTICS
+                </div>
+
+                <div class="dashboard-info">
+
+                    <h3>Predictive Analytics</h3>
+
+                    <p>
+                        Analyzes delivery delays, delay rates,
+                        prediction factors and risk interpretation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-placeholder">
+                    BUSINESS INSIGHTS
+                </div>
+
+                <div class="dashboard-info">
+
+                    <h3>Business Insights</h3>
+
+                    <p>
+                        Provides key findings, recommendations and
+                        risk-based action plans for supply chain operations.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="features">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Key Capabilities</h2>
+
+            <p>
+                The platform provides analytical capabilities across
+                multiple supply chain dimensions.
+            </p>
+
+        </div>
+
+        <div class="feature-grid">
+
+            <div class="feature-box">
+
+                <h3>Delivery Performance</h3>
+
+                <p>
+                    Identify on-time and delayed orders and measure
+                    average delivery delay.
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <h3>Inventory Risk</h3>
+
+                <p>
+                    Monitor sufficient inventory and reorder requirements
+                    across warehouses.
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <h3>Logistics Analysis</h3>
+
+                <p>
+                    Compare shipping modes, transportation costs
+                    and delivery patterns.
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <h3>Risk Monitoring</h3>
+
+                <p>
+                    Categorize orders into low, medium and high-risk
+                    operational segments.
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <h3>Predictive Analysis</h3>
+
+                <p>
+                    Analyze factors associated with delivery delays
+                    using machine learning.
+                </p>
+
+            </div>
+
+            <div class="feature-box">
+
+                <h3>Business Recommendations</h3>
+
+                <p>
+                    Convert analytical findings into operational
+                    recommendations and risk action plans.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WORKFLOW -->
+
+<section class="workflow" id="workflow">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Project Workflow</h2>
+
+            <p>
+                End-to-end development process used in the project.
+            </p>
+
+        </div>
+
+        <div class="workflow-grid">
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">1</div>
+
+                <h3>Data Generation</h3>
+
+                <p>
+                    Created the supply chain dataset.
+                </p>
+
+            </div>
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">2</div>
+
+                <h3>Data Processing</h3>
+
+                <p>
+                    Cleaned and prepared the data.
+                </p>
+
+            </div>
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">3</div>
+
+                <h3>EDA</h3>
+
+                <p>
+                    Performed exploratory analysis.
+                </p>
+
+            </div>
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">4</div>
+
+                <h3>Machine Learning</h3>
+
+                <p>
+                    Analyzed delivery delay risk.
+                </p>
+
+            </div>
+
+            <div class="workflow-step">
+
+                <div class="workflow-number">5</div>
+
+                <h3>Power BI</h3>
+
+                <p>
+                    Built interactive dashboards.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+    <h2>Explore the Complete Project</h2>
+
+    <p>
+        View the source code, datasets, SQL scripts, reports,
+        machine learning files and Power BI dashboard.
+    </p>
+
+    <a
+        href="https://github.com/Pratthima/Supply_Chain_Logistics_Analytics"
+        target="_blank"
+        class="btn btn-primary">
+        Open GitHub Repository
+    </a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 Supply Chain Logistics Analytics
+    </p>
+
+    <p>
+        Built with Python • SQL • Machine Learning • Power BI
+    </p>
+
+</footer>
+
+</body>
+</html>
