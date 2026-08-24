@@ -26,6 +26,8 @@
 </p>
 
 ---
+# View the Website
+https://pratthima.github.io/Supply_Chain_Logistics_Analytics/
 
 # Supply Chain & Logistics Analytics
 
